@@ -1,0 +1,28 @@
+{
+  "name": "token-creator-using-ethereum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuldeep23907/Token-Creator-using-Ethereum.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kuldeep23907/Token-Creator-using-Ethereum/issues"
+  },
+  "homepage": "https://github.com/kuldeep23907/Token-Creator-using-Ethereum#readme",
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "dotenv": "^8.2.0",
+    "react-bootstrap": "^1.3.0",
+    "truffle-hdwallet-provider": "^1.0.17"
+  }
+}
