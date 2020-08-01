@@ -3,6 +3,7 @@ import TokenGenerator from "./contracts/TokenGenerator.json";
 import getWeb3 from "./getWeb3";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
 
@@ -16,7 +17,8 @@ class App extends Component {
     symbol:'',
     decimals:0,
     address:'',
-    message: ''
+    message: '',
+    msgColor:'black'
   };
 
   componentDidMount = async () => {
@@ -50,19 +52,6 @@ class App extends Component {
     }
   };
 
-  // runExample = async () => {
-  //   const { accounts, contract } = this.state;
-
-  //   // Stores a given value, 5 by default.
-  //   await contract.methods.set(5).send({ from: accounts[0] });
-
-  //   // Get the value from the contract to prove it worked.
-  //   const response = await contract.methods.get().call();
-
-  //   // Update state with the result.
-  //   this.setState({ storageValue: response });
-  // };
-
   makeToken = async(event) => {
     console.log(this.state.name + this.state.symbol + this.state.decimals);
     this.setState({message:'Generating new token...'});
@@ -72,6 +61,7 @@ class App extends Component {
     const addressess = await this.state.contract.methods.getAllAddresses().call();
     this.setState({deployedTokenAddressList:addressess});
     this.setState({address:this.state.deployedTokenAddressList[this.state.deployedTokenAddressList.length - 1]});
+    this.setState({name:'', symbol:'', decimals:''})
   }
 
   render() {
@@ -79,24 +69,26 @@ class App extends Component {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
     return (
-      <div className="App">
-        <Form  onSubmit={(event) => {
+      <div className="App" >
+        <Image style={{width:"100%", height:100}}src={require('./assets/images/banner.jpg')} rounded />
+        <div style={{width:500, height:500, margin:"0 auto", marginTop:"100"}}>
+        <Form style={{paddingTop:50}} onSubmit={(event) => {
                                 this.makeToken();
                                 event.preventDefault();
           }}>
           <Form.Group controlId="tokenName">
             <Form.Label>Token Name</Form.Label>
-            <Form.Control onChange={(event) => {this.setState({name:event.target.value}); console.log(this.state.name)}} type="text" placeholder="Enter Token Name" />
+            <Form.Control value={this.state.name} onChange={(event) => {this.setState({name:event.target.value}); console.log(this.state.name)}} type="text" placeholder="Enter Token Name" />
           </Form.Group>
 
           <Form.Group controlId="tokenSymbol">
             <Form.Label>Token Symbol</Form.Label>
-            <Form.Control onChange={(event) => {this.setState({symbol:event.target.value})}} type="text" placeholder="Enter Token Symbol" />
+            <Form.Control value={this.state.symbol} onChange={(event) => {this.setState({symbol:event.target.value})}} type="text" placeholder="Enter Token Symbol" />
           </Form.Group>
 
           <Form.Group controlId="tokenDecimals">
             <Form.Label>Decimal places</Form.Label>
-            <Form.Control onChange={(event) => {this.setState({decimals:event.target.value})}} type="int" placeholder="Enter Decimal Places" />
+            <Form.Control value={this.state.decimals} onChange={(event) => {this.setState({decimals:event.target.value})}} type="int" placeholder="Enter Decimal Places" />
           </Form.Group>
 
           <Button variant="primary" type="submit">
@@ -104,11 +96,13 @@ class App extends Component {
           </Button>
         </Form>
 
-        <div>
-    <p>the token been generated at address {this.state.address}</p>
-    <p>Message: {this.state.message}</p>
+          <div>
+        <p>The <span style={{color: this.state.name ? 'red' : 'black'}}> {this.state.name ? this.state.name : '<<Token-name>>'} </span> Token with symbol  <span style={{color: this.state.symbol ? 'red' : 'black'}}>{this.state.symbol ? this.state.symbol : '<<symbol>>'} </span> generated at address <span style={{color: this.state.address ? 'red' : 'black'}}> {this.state.address ? this.state.address : '<<address>>'} </span></p>
+        <p style={{color:this.state.msgColor}}>Message: {this.state.message}</p>
+          </div>
         </div>
-      </div>
+       
+    </div>
     );
   }
 }
