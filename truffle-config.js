@@ -1,5 +1,5 @@
 const path = require("path");
-var HDWalletProvider = require("truffle-hdwallet-provider");
+var HDWalletProvider = require("@truffle/hdwallet-provider");
 require('dotenv').config();
 var mnemonic = process.env.MNEMONIC;
 var apiKey = process.env.API_KEY;
@@ -15,7 +15,7 @@ module.exports = {
       network_id: "*"
     },
     rinkeby: {
-      provider: () =>
+      provider: 
         new HDWalletProvider(
           mnemonic,
           apiKey

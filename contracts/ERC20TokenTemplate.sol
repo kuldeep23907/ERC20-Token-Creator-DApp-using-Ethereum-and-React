@@ -19,11 +19,11 @@ contract ERC20TokenTemplate {
         uint256 tokens
     );
     
-    constructor(string memory _name, string memory _symbol, uint256 _decimals, address tokenOwner) public {
+    constructor(string memory _name, string memory _symbol, uint256 _decimals, uint256 _supply, address tokenOwner) public {
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
-        supply = 1000000;
+        supply = _supply * 10**_decimals;
         founder = tokenOwner;
         balances[founder] = supply;
     }
