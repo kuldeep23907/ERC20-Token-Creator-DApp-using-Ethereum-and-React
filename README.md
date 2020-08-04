@@ -1,7 +1,7 @@
 # ERC20-Token-Creator-DApp-using-Ethereum-and-React
 A platform to create your own TOKEN with few clicks!!!
 
-Youtube link for the demo: https://www.youtube.com/watch?v=KX519Rfi3mc&feature=youtu.be
+Youtube link for the demo: https://www.youtube.com/watch?v=KX519Rfi3mc&feature=youtu.be and https://www.youtube.com/watch?v=Ho-Ryrdui08&feature=youtu.be
 
 ## Add a .env in the root directory and /client directory
 
