@@ -4,8 +4,11 @@ import getWeb3 from "./getWeb3";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Image from 'react-bootstrap/Image';
+import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
+require('dotenv').config();
+
 
 class App extends Component {
   state = { 
@@ -20,7 +23,8 @@ class App extends Component {
     address:'',
     message: '',
     msgColor:'black',
-    totalSupply:0
+    totalSupply:0,
+    loader:false
   };
 
   componentDidMount = async () => {
@@ -30,10 +34,10 @@ class App extends Component {
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.user.eth.getAccounts();
-      const raghuAccounts = process.env.ACCOUNT;;
-
+      // const raghuAccounts = process.env.ACCOUNT;
+      const raghuAccounts = '0xF08f8261d04a08c1fe0fA4653661809775C9DC08';
       console.log(accounts);
-      // console.log(raghuAccounts);
+      console.log(raghuAccounts);
 
       // Get the contract instance.
       const networkId = await web3.raghu.eth.net.getId();
@@ -68,8 +72,7 @@ class App extends Component {
   makeToken = async(event) => {
     console.log(this.state.name + this.state.symbol + this.state.decimals+ this.state.totalSupply);
     console.log(this.state.raghuAccounts + " " + this.state.accounts[0]);
-    this.setState({message:'Generating new token...'});
-
+    this.setState({message:'Generating new token...',loader:true});
     var encodedABI = this.state.contract.methods.generateToken((this.state.name), (this.state.symbol), (this.state.decimals),(this.state.totalSupply),(this.state.accounts[0])).encodeABI();
     console.log(encodedABI);
     // var nonce = (await this.state.web3.raghu.eth.getTransactionCount(this.state.raghuAccounts));
@@ -86,14 +89,14 @@ class App extends Component {
       chainId:4,
       chain:"rinkeby",
       hardfork:"petersburg"
-    }, process.env.PVT_KEY);
+    }, '0x7ab9a733eaed45272dcbbd0c74dbcf5859258dc3a6727af139b2cb6fc3445e7f'); // replace with process.env.PVT_KEY
     console.log(tx);
     console.log(await this.state.web3.raghu.eth.accounts.recoverTransaction(tx.rawTransaction));
 
     const resp = await this.state.web3.raghu.eth.sendSignedTransaction(tx.rawTransaction);
     console.log(resp);
 
-    this.setState({message: 'Generated new token'});
+    this.setState({message: 'Generated new token', loader:false});
     const addressess = await this.state.contract.methods.getAllAddresses().call();
     this.setState({deployedTokenAddressList:addressess});
     this.setState({address:this.state.deployedTokenAddressList[this.state.deployedTokenAddressList.length - 1]});
@@ -138,8 +141,12 @@ class App extends Component {
         </Form>
 
           <div>
-        <p>The <span style={{color: this.state.name ? 'red' : 'black'}}> {this.state.name ? this.state.name : '<<Token-name>>'} </span> Token with symbol  <span style={{color: this.state.symbol ? 'red' : 'black'}}>{this.state.symbol ? this.state.symbol : '<<symbol>>'} </span> with <span style={{color: this.state.totalSupply ? 'red' : 'black'}}>{this.state.totalSupply ? this.state.totalSupply : '<<total supply>>'} </span> Tokens (total-supply/10^decimals) generated at address <span style={{color: this.state.address ? 'red' : 'black'}}> {this.state.address ? this.state.address : '<<address>>'} </span></p>
-        <p style={{color:this.state.msgColor}}>Message: {this.state.message}</p>
+        <p>The <span style={{color: this.state.name ? 'red' : 'black'}}> {this.state.name ? this.state.name : '<<Token-name>>'} </span> Token with symbol  <span style={{color: this.state.symbol ? 'red' : 'black'}}>{this.state.symbol ? this.state.symbol : '<<symbol>>'} </span> with <span style={{color: this.state.totalSupply ? 'red' : 'black'}}>{this.state.totalSupply ? this.state.totalSupply : '<<total supply>>'} </span> Tokens generated at address <span style={{color: this.state.address ? 'red' : 'black'}}> {this.state.address ? this.state.address : '<<address>>'} </span></p>
+       { this.state.loader ? <p style={{color:this.state.msgColor}}>Message: {this.state.message}
+        <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+        </Spinner>
+        </p> : <p></p> }
           </div>
         </div>
        
