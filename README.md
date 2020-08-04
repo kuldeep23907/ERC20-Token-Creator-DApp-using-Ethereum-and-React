@@ -36,6 +36,8 @@ after that, move to /client directory and run:
 
 and you will see the following page:
 
+![token-creator](https://user-images.githubusercontent.com/24249646/89321436-94560c00-d6a0-11ea-8f6a-5214d6904347.png)
+
 
 
 
