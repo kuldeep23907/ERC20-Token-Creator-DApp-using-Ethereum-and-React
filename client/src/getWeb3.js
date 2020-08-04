@@ -35,7 +35,7 @@ const getWeb3 = () =>
 
         web3Raghu = new Web3(
           new Web3.providers.HttpProvider(
-            "https://rinkeby.infura.io/v3/64c8dc6e626e4fe48c73666d6a1406a8"
+            process.env.REACT_APP_API_KEY
           )
         )
         

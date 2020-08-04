@@ -7,8 +7,6 @@ import Image from 'react-bootstrap/Image';
 import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.css";
-require('dotenv').config();
-
 
 class App extends Component {
   state = { 
@@ -29,13 +27,14 @@ class App extends Component {
 
   componentDidMount = async () => {
     try {
+      console.log('api key' +  process.env.REACT_APP_API_KEY);
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.user.eth.getAccounts();
-      // const raghuAccounts = process.env.ACCOUNT;
-      const raghuAccounts = '0xF08f8261d04a08c1fe0fA4653661809775C9DC08';
+      // const raghuAccounts = process.env.REACT_APP_ACCOUNT;
+      const raghuAccounts = process.env.REACT_APP_ACCOUNT;
       console.log(accounts);
       console.log(raghuAccounts);
 
@@ -89,7 +88,7 @@ class App extends Component {
       chainId:4,
       chain:"rinkeby",
       hardfork:"petersburg"
-    }, '0x7ab9a733eaed45272dcbbd0c74dbcf5859258dc3a6727af139b2cb6fc3445e7f'); // replace with process.env.PVT_KEY
+    }, process.env.REACT_APP_PVT_KEY); // replace with process.env.REACT_APP_PVT_KEY
     console.log(tx);
     console.log(await this.state.web3.raghu.eth.accounts.recoverTransaction(tx.rawTransaction));
 
