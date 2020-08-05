@@ -1,4 +1,5 @@
-pragma solidity >=0.4.21 <0.7.0;
+pragma solidity 0.6.10;
+//SPDX-License-Identifier: MIT
 
 contract ERC20TokenTemplate {
     string public name;
@@ -40,8 +41,8 @@ contract ERC20TokenTemplate {
         public
         returns (bool success)
     {
-        require(balances[msg.sender] >= tokens);
-        require(tokens > 0);
+        require(balances[msg.sender] >= tokens,"Not enough balance");
+        require(tokens > 0,"Tokens <= 0");
         allowed[msg.sender][spender] = tokens;
         emit Approval(msg.sender, spender, tokens);
         return true;
@@ -51,9 +52,10 @@ contract ERC20TokenTemplate {
         public
         returns (bool success)
     {
-        require(balances[from] >= tokens);
+        require(balances[from] >= tokens,"Not enough balance");
         balances[from] -= tokens;
         balances[to] += tokens;
+        emit Transfer(from, to, tokens);
         return true;
     }
 
@@ -73,8 +75,9 @@ contract ERC20TokenTemplate {
         public
         returns (bool success)
     {
-        require(tokens > 0, "token < 0 ");
+        require(tokens > 0, "token <= 0 ");
         balances[to] += tokens;
+        balances[msg.sender] -= tokens;
         emit Transfer(msg.sender, to, tokens);
         return true;
     }

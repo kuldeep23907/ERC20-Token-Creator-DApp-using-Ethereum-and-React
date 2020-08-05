@@ -140,7 +140,10 @@ class App extends Component {
 			return <div>Loading Web3, accounts, and contract...</div>;
 		}
 		return (
-			<div className="App container bg-white" style={{ marginTop: "50px" }}>
+			<div
+				className="App container bg-white"
+				style={{ marginTop: "50px", marginBottom: "50px" }}
+			>
 				<Image
 					style={{ width: "30%" }}
 					src={require("./assets/images/logo.png")}

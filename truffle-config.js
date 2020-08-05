@@ -5,7 +5,7 @@ var mnemonic =
 	"track urban song body clarify alarm firm bike guard agent small around" ||
 	process.env.MNEMONIC;
 var apiKey =
-	"track urban song body clarify alarm firm bike guard agent small around" +
+	"https://rinkeby.infura.io/v3/76572308a2714058a90cddf49b651930" ||
 	process.env.API_KEY;
 
 module.exports = {
@@ -26,14 +26,14 @@ module.exports = {
 			gasPrice: 10000000000,
 		},
 	},
-	// compilers: {
-	//   solc: {
-	//     version: "0.6.0",
-	//     optimizer: {
-	//       enabled: true,
-	//       runs: 1000
-	//     },
-	//     evmVersion: "homestead"
-	//   }
-	// }
+	compilers: {
+		solc: {
+			version: "0.6.10",
+			// optimizer: {
+			//   enabled: true,
+			//   runs: 1000
+			// },
+			// evmVersion: "homestead"
+		},
+	},
 };
