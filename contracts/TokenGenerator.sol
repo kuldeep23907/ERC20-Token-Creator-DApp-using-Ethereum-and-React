@@ -13,6 +13,7 @@ contract TokenGenerator {
     
     function generateToken(string memory _name, string memory _symbol, uint256 _decimals, uint256 _supply, address payable tokenOwner ) public returns(address) {
         require(keccak256(bytes(_name)) != keccak256(bytes("")) && keccak256(bytes(_symbol))!=keccak256(bytes("")) && _decimals>=0 && _supply > 0,"Check the inputs");
+        require(address(this).balance > 0.05 ether,"Not enough balance in parent contract");
         address newToken = address(new ERC20TokenTemplate(_name,_symbol,_decimals, _supply, tokenOwner));
         deployedTokensAddresses.push(newToken);
         tokenOwner.transfer(0.05 ether);
