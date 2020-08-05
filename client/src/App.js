@@ -132,7 +132,7 @@ class App extends Component {
 				this.state.deployedTokenAddressList.length - 1
 			],
 		});
-		this.setState({ name: "", symbol: "", decimals: "", totalSupply: "" });
+		// this.setState({ name: "", symbol: "", decimals: "", totalSupply: "" });
 	};
 
 	render() {
@@ -216,7 +216,7 @@ class App extends Component {
 					</Form>
 
 					<div>
-						<p>
+						<div>
 							The{" "}
 							<span style={{ color: this.state.name ? "red" : "black" }}>
 								{" "}
@@ -237,14 +237,14 @@ class App extends Component {
 								{" "}
 								{this.state.address ? this.state.address : "<<address>>"}{" "}
 							</span>
-						</p>
+						</div>
 						{this.state.loader ? (
-							<p style={{ color: this.state.msgColor }}>
+							<div style={{ color: this.state.msgColor }}>
 								Message: {this.state.message}
 								<Spinner animation="border" role="status">
 									<span className="sr-only">Loading...</span>
 								</Spinner>
-							</p>
+							</div>
 						) : (
 							<p></p>
 						)}
